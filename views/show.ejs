@@ -1,0 +1,128 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="background-image">
+        <img src="/images/background.jpg" alt="Background">
+    </div>
+
+    <div class="outer-box">
+        <h1>
+            <%=show.name %>
+        </h1>
+
+        <% if(show.image) { %>
+            <img src="<%= show.image.original %>" alt="<%= show.name %> Poster" style="height:300px;border-radius: 5px; margin-left: 10px;">
+            <% } %>
+
+
+        <p>
+            <%= show.summary ? show.summary.replace(/<[^>]+>/g,'') : "No Description Available" %>
+        </p>
+
+        <p>
+            <strong>Genres:</strong><%= show.genres.join(", ") %>
+            </p>
+
+        <p>
+            <strong>Status:</strong><%= show.status %>
+        </p>
+
+        <p>
+            <strong>Language:</strong><%= show.language %>
+        </p>
+
+        <p>
+            <strong>Runtime:</strong><%= show.runtime%>
+        </p>
+
+        <p>
+            <strong>Premiered:</strong><%= show.premiered %>
+        </p>
+
+        <p>
+            <strong>Ended On:</strong><%= show.ended %>
+        </p>
+
+        <p>
+            <strong>Rating:</strong><%= show.rating?.average || " N/A" %>
+        </p>
+
+        <a href="<%= show.officialSite || show.url %>" target="_blank" class="btn">Visit Official Site</a>
+    </div>
+
+    <!-- Cast Section -->
+    <div class="outer-box">
+        <h2>Cast</h2>
+
+        <ul>
+            <% for(let i=0;i<cast.length;i++) { 
+                
+                const member=cast[i]; %>
+
+                <li style="margin-bottom: 10px;">
+                    <%= member.person.name%> as <%=member.character.name %>
+
+                    <%# Member Photo (if it exists)%>
+                    <% if(member.person.image) { %>
+                        <img src="<%= member.person.image.medium %>" alt="<%= member.person.name %>" style="height:200px;border-radius: 5px;">
+                    <% } %>
+                </li>
+            
+            <% } %>
+        </ul>
+    </div>
+
+
+    <br><hr><br>
+
+    <%# EPISODES SECTION %>
+
+    <div class="outer-box">
+        <h2>Episodes</h2>
+
+        <%# Showing episodes season wise --%>
+
+            <% let currentSeason=0; 
+                for(let i=0;i<episodes.length;i++) 
+                {
+                    const episode=episodes[i]; 
+                    if(episode.season!==currentSeason) 
+                    { 
+                        /*this loop works for all indexes except 0..so for 0th season the <ul> is started below and ended in
+                    this loop*/
+
+                        if(currentSeason!==0) { %>
+                        </ul>
+                        <% } 
+                        //Now current season is given the episode's season number 
+                        
+                        currentSeason=episode.season; %>
+
+                        <h3>Season <%=episode.season%></h3>
+
+                        <ul>
+
+                        <%# Here I am starting a new <ul> %>
+                    <% } %>
+
+                    <li>
+                        <strong><%= episode.name %></strong> (<%=episode.airdate %>)
+                    </li>
+
+                <% } %>
+
+            <%# Showing like this 
+                <h3>Season 1</h3> 
+                    <ul>
+                        <li>Episode 1</li>
+                        <li>Episode 2</li>
+                    </ul>
+
+                <h3>Season 2</h3>
+                    <ul>
+                        <li>Episode 1</li>...
+                    </ul>
+
+            %>
+    </div>
+
+    <%- include("partials/footer.ejs") %>

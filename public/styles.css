@@ -1,0 +1,339 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  background-color: #15111f;
+  color: #f7f5e9;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+
+  font-family: fantasy;
+  align-items: center;
+  text-align: center;
+  padding: 20px 20px;
+  position: relative;
+}
+
+/* title */
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-60%);
+  font-size: 60px;
+  letter-spacing: 1px;
+  padding: 20px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.homepage-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 80px 30px;
+  color: #f7f5e9;
+  animation: fadeInUp 1s ease-out;
+}
+
+.homepage-intro h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.homepage-intro h1 span {
+  color: #fcde59;
+  font-weight: bold;
+}
+
+.homepage-intro .quote {
+  font-size: 22px;
+  font-style: italic;
+  color: #cccccc;
+  margin-bottom: 15px;
+  max-width: 600px;
+}
+
+.homepage-intro .subtext {
+  font-size: 18px;
+  color: #aaa;
+}
+
+/* subtle animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 30px;
+}
+
+/* nav links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  font-size: 30px;
+  color: antiquewhite;
+  transition: color 0.3s;
+  align-items: center;
+}
+
+.nav-links li a:hover {
+  color: #fcde59;
+}
+
+/* search bar */
+.search-form {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #1f1b2e;
+  border-radius: 50px;
+  padding: 6px 10px;
+  box-shadow: 0 0 8px rgba(252, 222, 89, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-form:hover {
+  box-shadow: 0 0 12px rgba(252, 222, 89, 0.6);
+}
+
+.search-form input {
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: #f7f5e9;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 50px;
+
+  font-family: inherit;
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.search-form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1f1b2e inset !important;
+  -webkit-text-fill-color: #f7f5e9 !important;
+  border-radius: 50px !important;
+  caret-color: #fcde59 !important;
+}
+
+/* Expand input when focused */
+.search-form input:focus {
+  width: 300px;
+}
+
+/* Search button */
+.search-form button {
+  background-color: transparent;
+  border: none;
+  color: #fcde59;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: transform 0.2s ease;
+}
+
+.search-form button:hover {
+  transform: scale(1.2);
+}
+
+/* background image*/
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: -1; /* Send it behind all content */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0.1;
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  border: none;
+  margin: 0;
+  padding: 0;
+
+  pointer-events: none;
+}
+
+/*add padding/margin to search content */
+.search-content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+  color: #f7f5e9;
+}
+
+/* GENERAL RESET */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #15111f;
+  color: #f7f5e9;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* SHOW LISTING CARDS */
+.show-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 40px;
+}
+
+.show-card {
+  background-color: #1f1b2e;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(252, 222, 89, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.show-card:hover {
+  transform: scale(1.01);
+}
+
+.show-card h2 {
+  margin-bottom: 10px;
+}
+
+.show-card img {
+  width: 150px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* BUTTON */
+.btn {
+  display: inline-block;
+  background-color: #fcde59;
+  color: #1f1b2e;
+  padding: 10px 20px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #ffe98f;
+  transform: scale(1.05);
+}
+
+/* SHOW DETAIL PAGE */
+.outer-box {
+  background-color: #1f1b2e;
+  margin: 40px;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(252, 222, 89, 0.2);
+}
+
+.outer-box img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+/* SEASON LIST SCROLLABLE */
+.outer-box h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.season-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.season-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.season-container::-webkit-scrollbar-thumb {
+  background-color: #fcde59;
+  border-radius: 4px;
+}
+
+/* EACH EPISODE CARD */
+.episode-card {
+  background-color: #292040;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 250px;
+  box-shadow: 0 0 10px rgba(252, 222, 89, 0.15);
+}
+
+/* CAST */
+ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 15px;
+}
+
+li img {
+  vertical-align: middle;
+}
+
+/* footer */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}

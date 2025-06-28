@@ -1,0 +1,42 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="background-image">
+        <img src="/images/background.jpg" alt="Background">
+    </div>
+
+    <div class="outer-div">
+        <h1>Search Results</h1>
+
+        <% if(shows.length>0) { %>
+            <% for(let i=0;i<shows.length;i++) { let show=shows[i]; %>
+
+                <div class="show-card">
+
+                    <h2>
+                        <%=show.name%>
+                    </h2>
+
+                    <% if(show.image) { %>
+                        <img src="<%= show.image.medium %>" alt="<%= show.name %> Poster">
+                        <% } %>
+
+                            <p>
+                                <%= show.summary?show.summary.replace(/<[^>]+>/g, '') : "No Description Available."%>
+                            </p>
+
+                            <p><strong>Genres:</strong>
+                                <%= show.genres %>
+                            </p>
+
+                            <a href="/show/<%=show.id%>" class="btn">View Details</a>
+                            <a href="<%= show.url %>" target="_blank" class="btn">View on TVMaze</a>
+                </div>
+                <% } %>
+                    <% } else { %>
+                        <p>No shows found.</p>
+                        <% } %>
+
+    </div>
+
+
+    <%- include("partials/footer.ejs") %>
