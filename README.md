@@ -2,6 +2,8 @@
 
 A fan-powered web app to explore your favorite **TV shows and web series** using the [TVMaze API](https://www.tvmaze.com/api).
 
+🔗 **Live Site:** [binge-box.onrender.com](https://the-binge-box.onrender.com/)
+
 ## 🔍 Features
 
 - Search for any TV show or web series
