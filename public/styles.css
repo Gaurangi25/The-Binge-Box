@@ -31,6 +31,12 @@ body {
   white-space: nowrap;
 }
 
+.title a {
+  text-decoration: none;
+  list-style: none;
+  color: #f7f5e9;
+}
+
 .homepage-intro {
   display: flex;
   flex-direction: column;
@@ -46,7 +52,7 @@ body {
 .homepage-intro h1 {
   font-size: 48px;
   margin-bottom: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .homepage-intro h1 span {
@@ -93,11 +99,12 @@ body {
   list-style: none;
   margin: 0;
   padding: 0;
+  margin-top: 5px;
 }
 
 .nav-links li a {
   text-decoration: none;
-  font-size: 30px;
+  font-size: 32px;
   color: antiquewhite;
   transition: color 0.3s;
   align-items: center;
@@ -336,4 +343,22 @@ footer {
   width: 100%;
   bottom: 0;
   left: 0;
+}
+
+@media (max-width: 1300px) {
+  .title {
+    font-size: 45px;
+  }
+
+  .nav-links li a {
+    font-size: 28px;
+  }
+
+  .search-form input {
+    width: 150px;
+  }
+
+  .search-form input:focus {
+    width: 190px;
+  }
 }
