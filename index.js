@@ -2,7 +2,7 @@ import express from "express";
 import axios from "axios";
 import ejs from "ejs";
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -70,6 +70,7 @@ app.get("/show/:id", async (req, res) => {
       .render("error.ejs", { message: "Could not load show details." });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
