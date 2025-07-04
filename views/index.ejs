@@ -5,9 +5,23 @@
   </div>
 
   <div class="homepage-intro">
-  <h1>Welcome to <span>The Binge Box 🍿</span></h1>
-  <p class="quote">“I have no life. I'm watching a show that ended 10 years ago like it's a live event.”</p>
-  <p class="subtext">Search your favorite shows and get hooked season by season.</p>
-</div>
+    <h1>Welcome to <span>The Binge Box 🍿</span></h1>
+    <p class="quote">“I have no life. I'm watching a show that ended 10 years ago like it's a live event.”</p>
+    <p class="subtext">Search your favorite shows and get hooked season by season.</p>
+  </div>
 
-    <%- include("partials/footer.ejs") %>
+  <div class="category-section">
+    <h2>Browse by Genre</h2>
+    <div class="pill-container">
+      <a href="/search?q=Action" class="pill">Action</a>
+      <a href="/search?q=Comedy" class="pill">Comedy</a>
+      <a href="/search?q=Thriller" class="pill">Thriller</a>
+      <a href="/search?q=Romance" class="pill">Romance</a>
+      <a href="/search?q=Sci-Fi" class="pill">Sci-Fi</a>
+      <a href="/search?q=Horror" class="pill">Horror</a>
+      <a href="/search?q=Animated" class="pill">Animated</a>
+    </div>
+  </div>
+
+
+  <%- include("partials/footer.ejs") %>

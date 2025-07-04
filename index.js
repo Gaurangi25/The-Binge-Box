@@ -15,8 +15,29 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
-app.get("/search", (req, res) => {
+/*app.get("/search", (req, res) => {
   res.redirect("/");
+});*/
+
+app.get("/search", async (req, res) => {
+  const query = req.query.q;
+
+  if (!query) {
+    return res.render("search.ejs", { shows: [] });
+  }
+
+  try {
+    const response = await axios.get(`${API_URL}/search/shows?q=${query}`);
+    const shows = response.data.map((result) => result.show);
+
+    if (!shows.length) {
+      return res.render("error.ejs", { message: "No show found!" });
+    }
+
+    res.render("search.ejs", { shows });
+  } catch (error) {
+    res.status(500).render("error.ejs", { message: "Something went wrong." });
+  }
 });
 
 app.post("/search", async (req, res) => {
@@ -70,7 +91,6 @@ app.get("/show/:id", async (req, res) => {
       .render("error.ejs", { message: "Could not load show details." });
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);

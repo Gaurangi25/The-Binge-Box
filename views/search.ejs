@@ -4,38 +4,54 @@
         <img src="/images/background.jpg" alt="Background">
     </div>
 
-    <div class="outer-div">
-        <h1>Search Results</h1>
+    <div class="content-wrapper">
+        <div class="outer-div">
+            <h1>Search Results</h1>
 
-        <% if(shows.length>0) { %>
-            <% for(let i=0;i<shows.length;i++) { let show=shows[i]; %>
+            <% if(shows.length>0) { %>
+                <div class="show-grid">
 
-                <div class="show-card">
+                    <% for(let i=0;i<shows.length;i++) { let show=shows[i]; %>
+                        <div class="show-card">
 
-                    <h2>
-                        <%=show.name%>
-                    </h2>
+                            <h2>
+                                <%=show.name%>
+                            </h2>
 
-                    <% if(show.image) { %>
-                        <img src="<%= show.image.medium %>" alt="<%= show.name %> Poster">
-                        <% } %>
+                            <% if(show.image) { %>
+                                <div class="img-wrapper">
+                                    <img src="<%= show.image.original || show.image.medium %>" alt="Preview">
+                                    
+                                </div>
 
-                            <p>
-                                <%= show.summary?show.summary.replace(/<[^>]+>/g, '') : "No Description Available."%>
-                            </p>
+                                
+                            <% } else { %>
+                                <div class="img-placeholder"></div>
+                            <% } %>
 
-                            <p><strong>Genres:</strong>
-                                <%= show.genres %>
-                            </p>
 
-                            <a href="/show/<%=show.id%>" class="btn">View Details</a>
-                            <a href="<%= show.url %>" target="_blank" class="btn">View on TVMaze</a>
+                                    <p class="summary">
+                                        <%= show.summary ? show.summary.replace(/<[^>]+>/g, '').slice(0, 100) + '...' : "No Description Available." %>
+                                    </p>
+
+                                    <a href="/show/<%= show.id %>" class="btn2">Read More</a>
+
+
+                                    <p><strong>Genres:</strong>
+                                        <%= show.genres %>
+                                    </p>
+
+                                    <a href="/show/<%=show.id%>" class="btn">View Details</a>
+                                    
+                        </div>
+                    <% } %>
+
                 </div>
-                <% } %>
                     <% } else { %>
-                        <p>No shows found.</p>
-                        <% } %>
+                            <div class="img-placeholder"></div>
+                    <% } %>
 
+        </div>
     </div>
 
 
