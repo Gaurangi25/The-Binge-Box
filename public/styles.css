@@ -10,13 +10,30 @@ body {
 
 .top-bar {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  justify-content:baseline;
 
   font-family: fantasy;
   align-items: center;
   text-align: center;
   padding: 20px 20px;
   position: relative;
+
+  gap: 20px;
+}
+
+/* SIDE BAR (FORM AND LINK) */
+.side-bar{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  gap: 20px;
+}
+
+.title2{
+  font-size: 30px;
+  padding: 10px;
+  margin-top: 5px;
 }
 
 /* title */
@@ -31,7 +48,8 @@ body {
   white-space: nowrap;
 }
 
-.title a {
+.title a,
+.title2 a {
   text-decoration: none;
   list-style: none;
   color: #f7f5e9;
@@ -360,5 +378,12 @@ footer {
 
   .search-form input:focus {
     width: 190px;
+  }
+}
+
+@media (max-width:1440px)
+{
+  .title{
+    font-size: 45px;
   }
 }
