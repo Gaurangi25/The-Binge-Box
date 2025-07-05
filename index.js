@@ -14,11 +14,32 @@ process.on("uncaughtException", (err) => {
   console.error("🔴 Uncaught Exception:", err);
 });
 
+let trendingCache = [];
+let cacheLastUpdated = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 const API_URL = "https://api.tvmaze.com";
+
+async function fetchTrendingShows() {
+  try {
+    const response = await axios.get(`${API_URL}/shows?page=1`, {
+      timeout: 5000,
+    });
+    const allShows = response.data.filter((show) => show.image?.medium);
+    trendingCache = allShows.slice(0, 6);
+    cacheLastUpdated = Date.now();
+    console.log("✅ Trending cache updated");
+  } catch (err) {
+    console.error(
+      "❌ Failed to update trending cache:",
+      err.message || err.code
+    );
+  }
+}
 
 // app.get("/", (req, res) => {
 //   res.render("index.ejs");
@@ -29,14 +50,18 @@ const API_URL = "https://api.tvmaze.com";
 });*/
 
 app.get("/", async (req, res) => {
-  try {
-    const trendingRes = await axios.get(`${API_URL}/shows`, { timeout: 5000 });
-    const allShows = trendingRes.data.filter((show) => show.image); // only shows with images
-    const trending = allShows.slice(0, 6);
+  let trending = [];
+  let randomShow = null;
 
-    // Pick 1 random show from the trending list
-    const randomIndex = Math.floor(Math.random() * trending.length);
-    const randomShow = trending[randomIndex];
+  try {
+    if (!trendingCache.length || Date.now() - cacheLastUpdated > CACHE_TTL) {
+      await fetchTrendingShows();
+    }
+
+    trending = trendingCache;
+    randomShow = trending.length
+      ? trending[Math.floor(Math.random() * trending.length)]
+      : null;
 
     // Add a static or rotating quote list
     const quotes = [
@@ -169,5 +194,11 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
+
+// Preload cache so homepage is fast on first request
+fetchTrendingShows();
+
+// every 5 mins
+setInterval(fetchTrendingShows, CACHE_TTL);
 
 app.get("/health", (req, res) => res.status(200).send("OK"));
