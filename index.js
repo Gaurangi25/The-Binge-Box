@@ -11,13 +11,61 @@ app.set("view engine", "ejs");
 
 const API_URL = "https://api.tvmaze.com";
 
-app.get("/", (req, res) => {
-  res.render("index.ejs");
-});
+// app.get("/", (req, res) => {
+//   res.render("index.ejs");
+// });
 
 /*app.get("/search", (req, res) => {
   res.redirect("/");
 });*/
+
+app.get("/", async (req, res) => {
+  try {
+    const trendingRes = await axios.get(`${API_URL}/shows`);
+    const trending = trendingRes.data.slice(0, 6); // taking first 6 trending shows
+
+    // Pick 1 random show from the trending list
+    const randomIndex = Math.floor(Math.random() * trending.length);
+    const randomShow = trending[randomIndex];
+
+    // Add a static or rotating quote list
+    const quotes = [
+      "Binge watching is my cardio.",
+      "One more episode won’t hurt… right?",
+      "Some people run marathons, I finish series.",
+      "TV taught me how to feel things.",
+      "I speak fluent quotes from my favorite shows.",
+      "I could quit watching... but why risk it?",
+      "I don't need therapy, I need spoilers.",
+      "Reality called, but I missed it for a plot twist.",
+      "My weekend plans? Intro + Recap + Play.",
+      "Friends come and go, but seasons stay forever.",
+      "First I binge, then I rewatch with commentary.",
+      "Just one more episode — the biggest lie I tell myself.",
+      "I measure time in episodes, not hours.",
+      "TV doesn’t ask questions. TV understands.",
+      "If I had a dollar for every cliffhanger, I’d own Netflix.",
+      "Shows end. Pain remains.",
+      "I have commitment issues… unless it’s a 7-season show.",
+      "Finished the series. Emotionally ruined. 10/10 would recommend.",
+      "Sleep is temporary, binge is eternal.",
+      "Intro skipped. Emotions not.",
+    ];
+
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+    res.render("index.ejs", {
+      trending,
+      randomShow,
+      quote,
+    });
+  } catch (err) {
+    console.error("Error loading homepage:", err.message);
+    res
+      .status(500)
+      .render("error.ejs", { message: "Unable to load homepage." });
+  }
+});
 
 app.get("/search", async (req, res) => {
   const query = req.query.q;

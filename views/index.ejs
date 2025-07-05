@@ -23,5 +23,58 @@
     </div>
   </div>
 
+  <!-- Trending Shows Section -->
+  <div class="category-section">
+    <h2>🔥 Trending Now</h2>
+    <div class="show-grid">
+      <% for (let i=0; i < trending.length; i++) { %>
+        <div class="show-card">
+          <div class="img-wrapper">
+            <% if (trending[i].image) { %>
+              <img class="trending-img" src="<%= trending[i].image.original || trending[i].image.medium %>"
+                alt="<%= trending[i].name %>">
+              <% } else { %>
+                <div class="img-placeholder"></div>
+                <% } %>
+          </div>
+          <h2>
+            <%= trending[i].name %>
+          </h2>
+          <a href="/show/<%= trending[i].id %>" class="btn">More</a>
+        </div>
+        <% } %>
+    </div>
+  </div>
+
+
+  <!-- Highlight Section -->
+  <div class="highlight-section">
+    <h2>🎲 Show of the Day</h2>
+    <div class="highlight-card">
+      <div class="highlight-image">
+        <% if (randomShow.image) { %>
+          <img src="<%= randomShow.image.original || randomShow.image.medium %>" alt="<%= randomShow.name %>">
+          <% } else { %>
+            <div class="img-placeholder"></div>
+            <% } %>
+      </div>
+      <div class="highlight-details">
+        <h2>
+          <%= randomShow.name %>
+        </h2>
+        <p class="highlight-summary">
+          <%= randomShow.summary ? randomShow.summary.replace(/<[^>]*>/g, '').slice(0, 150) + '...'
+            : "No description" %>
+        </p>
+        <a href="/show/<%= randomShow.id %>" class="highlight-btn">Explore</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote Section -->
+  <div class="quote-section">
+    <h2>🎮 Quote of the Day</h2>
+    <p class="daily-quote">"<%= quote %>"</p>
+  </div>
 
   <%- include("partials/footer.ejs") %>
