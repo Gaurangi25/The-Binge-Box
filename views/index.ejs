@@ -50,25 +50,34 @@
   <!-- Highlight Section -->
   <div class="highlight-section">
     <h2>🎲 Show of the Day</h2>
-    <div class="highlight-card">
-      <div class="highlight-image">
-        <% if (randomShow.image) { %>
+    <% if (randomShow && randomShow.image) { %>
+      <div class="highlight-card">
+        <div class="highlight-image">
           <img src="<%= randomShow.image.original || randomShow.image.medium %>" alt="<%= randomShow.name %>">
-          <% } else { %>
-            <div class="img-placeholder"></div>
-            <% } %>
+        </div>
+        <div class="highlight-details">
+          <h2>
+            <%= randomShow.name %>
+          </h2>
+          <p class="highlight-summary">
+            <%= randomShow.summary ? randomShow.summary.replace(/<[^>]*>/g, '').slice(0, 150) + '...'
+              : "No description" %>
+          </p>
+          <a href="/show/<%= randomShow.id %>" class="highlight-btn">Explore</a>
+        </div>
       </div>
-      <div class="highlight-details">
-        <h2>
-          <%= randomShow.name %>
-        </h2>
-        <p class="highlight-summary">
-          <%= randomShow.summary ? randomShow.summary.replace(/<[^>]*>/g, '').slice(0, 150) + '...'
-            : "No description" %>
-        </p>
-        <a href="/show/<%= randomShow.id %>" class="highlight-btn">Explore</a>
-      </div>
-    </div>
+      <% } else { %>
+        <div class="highlight-card">
+          <div class="highlight-image">
+            <div class="img-placeholder">Highlight unavailable</div>
+          </div>
+          <div class="highlight-details">
+            <h2>No Show Today</h2>
+            <p class="highlight-summary">We couldn’t load the show of the day. Please try again later.</p>
+          </div>
+        </div>
+        <% } %>
+
   </div>
 
   <!-- Quote Section -->
