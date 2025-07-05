@@ -5,6 +5,15 @@ import ejs from "ejs";
 const port = process.env.PORT || 3000;
 const app = express();
 
+//Global safety: Catch all unhandled async errors
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("🔴 Unhandled Rejection:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("🔴 Uncaught Exception:", err);
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -21,7 +30,7 @@ const API_URL = "https://api.tvmaze.com";
 
 app.get("/", async (req, res) => {
   try {
-    const trendingRes = await axios.get(`${API_URL}/shows`);
+    const trendingRes = await axios.get(`${API_URL}/shows`, { timeout: 5000 });
     const allShows = trendingRes.data.filter((show) => show.image); // only shows with images
     const trending = allShows.slice(0, 6);
 
@@ -61,7 +70,13 @@ app.get("/", async (req, res) => {
       quote,
     });
   } catch (err) {
-    console.error("Error loading homepage:", err.message);
+    console.error("Error loading homepage:", {
+      message: err.message,
+      code: err.code,
+      status: err.response?.status,
+      data: err.response?.data,
+      stack: err.stack,
+    });
     res
       .status(500)
       .render("error.ejs", { message: "Unable to load homepage." });
@@ -95,9 +110,8 @@ app.post("/search", async (req, res) => {
   try {
     const response = await axios.get(`${API_URL}/search/shows?q=${userInput}`);
 
-    console.log(response.data);
-
-    console.log("User searched for : ", userInput);
+    // console.log(response.data);
+    // console.log("User searched for : ", userInput);
 
     //To get top results
     //const shows = response.data[0]?.show;
@@ -131,8 +145,8 @@ app.get("/show/:id", async (req, res) => {
 
     res.render("show.ejs", {
       show: showDetails,
-      episodes: showDetails._embedded.episodes,
-      cast: showDetails._embedded.cast,
+      episodes: showDetails._embedded.episodes || [],
+      cast: showDetails._embedded.cast || [],
     });
   } catch (error) {
     res
@@ -141,6 +155,19 @@ app.get("/show/:id", async (req, res) => {
   }
 });
 
+// Catch-all 404 handler
+app.use((req, res) => {
+  res.status(404).render("error.ejs", { message: "Page Not Found." });
+});
+
+// Global internal error handler
+app.use((err, req, res, next) => {
+  console.error("🔴 Express Internal Error:", err.stack);
+  res.status(500).render("error.ejs", { message: "Internal Server Error." });
+});
+
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
+
+app.get("/health", (req, res) => res.status(200).send("OK"));

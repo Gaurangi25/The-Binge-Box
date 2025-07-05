@@ -1,8 +1,8 @@
 <%- include("partials/header.ejs") %>
     <h2>
-        <%= message %>
+        <%= message || "Something went wrong." %>
     </h2>
-    
+
     <a href="/">Go Back</a>
 
-    <%- include("partials/footer.ejs") %>
+<%- include("partials/footer.ejs") %>
