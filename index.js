@@ -22,7 +22,8 @@ const API_URL = "https://api.tvmaze.com";
 app.get("/", async (req, res) => {
   try {
     const trendingRes = await axios.get(`${API_URL}/shows`);
-    const trending = trendingRes.data.slice(0, 6); // taking first 6 trending shows
+    const allShows = trendingRes.data.filter((show) => show.image); // only shows with images
+    const trending = allShows.slice(0, 6);
 
     // Pick 1 random show from the trending list
     const randomIndex = Math.floor(Math.random() * trending.length);
